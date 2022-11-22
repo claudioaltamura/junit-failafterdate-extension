@@ -7,10 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FailAfterDateTest {
 
-    @Test
     @Disabled
+    @Test
     @FailAfterDate(from ="2022-01-01", reason = "Please refactor the code as agreed upon!")
-    void failFrom() {
+    void whenFailAfterDateInThePastTestFeils() {
+        assertTrue(true);
+    }
+
+    @Test
+    @FailAfterDate(from ="2999-01-01", reason = "Please refactor the code as agreed upon!")
+    void whenFailAfterDateInTheFutureTestPass() {
         assertTrue(true);
     }
 
