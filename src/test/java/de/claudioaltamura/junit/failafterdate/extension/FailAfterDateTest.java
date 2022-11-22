@@ -9,13 +9,13 @@ public class FailAfterDateTest {
 
     @Disabled
     @Test
-    @FailAfterDate(from ="2022-01-01", reason = "Please refactor the code as agreed upon!")
+    @FailAfterDate(after = "2022-01-01", reason = "Please refactor the code as agreed upon!")
     void whenFailAfterDateInThePastTestFeils() {
         assertTrue(true);
     }
 
     @Test
-    @FailAfterDate(from ="2999-01-01", reason = "Please refactor the code as agreed upon!")
+    @FailAfterDate(after = "2999-01-01", reason = "Please refactor the code as agreed upon!")
     void whenFailAfterDateInTheFutureTestPass() {
         assertTrue(true);
     }

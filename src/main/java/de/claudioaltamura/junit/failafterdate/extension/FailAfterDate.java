@@ -11,6 +11,6 @@ import java.lang.annotation.*;
 @Documented
 @API(status = API.Status.EXPERIMENTAL)
 public @interface FailAfterDate {
-    String from() default "";
+    String after() default "";
     String reason() default "";
 }

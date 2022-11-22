@@ -19,9 +19,9 @@ public class FailAfterDateCondition implements ExecutionCondition {
         final Optional<FailAfterDate> annotation = AnnotationUtils.findAnnotation(context.getElement(), FailAfterDate.class);
         if(annotation.isPresent()) {
             final FailAfterDate failAfterDate = annotation.get();
-            if(LocalDate.parse(failAfterDate.from())
+            if(LocalDate.parse(failAfterDate.after())
                     .isBefore(LocalDate.now())) {
-                throw new AssertionFailedError("Date passed: " + failAfterDate.from() + ". " + failAfterDate.reason());
+                throw new AssertionFailedError("Date passed: " + failAfterDate.after() + ". " + failAfterDate.reason());
             }
         }
 
