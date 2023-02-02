@@ -9,6 +9,9 @@
     <version>0.1.0-SNAPHOST</version>
 
     <name>junit5-failafterdate-extension</name>
+    <description>A JUnit 5 extension to fail tests after a specific date.</description>
+    <url>https://github.com/claudioaltamura/junit-failafterdate-extension</url>
+    <inceptionYear>2022</inceptionYear>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,6 +22,33 @@
         <apiguardion.version>1.1.2</apiguardion.version>
         <spotless.version>2.4.1</spotless.version>
     </properties>
+
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>cla</id>
+            <email>me@claudioaltamura.de</email>
+            <name>Claudio Altamura</name>
+            <url>https://github.com/claudioaltamura</url>
+            <organization>Claudio Altamura</organization>
+            <organizationUrl>https://claudioaltamura.de</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/claudioaltamura/junit-failafterdate-extension</url>
+        <connection>https://github.com/claudioaltamura/junit-failafterdate-extension.git</connection>
+        <developerConnection>https://github.com/claudioaltamura/junit-failafterdate-extension.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -54,32 +84,87 @@
             <version>${spotless.version}</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>3.0.0-M7</version>
                 <configuration>
-                    <argLine>
-                        --illegal-access=permit
-                    </argLine>
+                    <forkCount>1</forkCount>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.2</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
-                    <argLine>
-                        --illegal-access=permit
-                    </argLine>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.0.0-M6</version>
+                <configuration>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <arguments>${arguments} -Psonatype-release</arguments>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.13</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -89,4 +174,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
